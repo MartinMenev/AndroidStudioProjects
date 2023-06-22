@@ -57,6 +57,7 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
             text = from,
             fontSize = 36.sp,
             fontStyle = FontStyle.Italic,
+            color = Color.LightGray,
             modifier = Modifier
                 .padding(16.dp)
                 .align(alignment = Alignment.End)
