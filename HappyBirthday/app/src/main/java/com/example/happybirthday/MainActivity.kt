@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.happybirthday.ui.theme.HappyBirthdayTheme
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +34,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    GreetingText(message = "Happy Birthday Martin!", from = "From Emma")
-
+                    GreetingImage("Happy Birthday Martin!", "From Emma")
                 }
             }
         }
@@ -52,14 +52,14 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
             fontSize = 90.sp,
             lineHeight = 116.sp,
             textAlign = TextAlign.Center,
-            color = Color.Blue,
+            color = Color.Black,
             modifier = Modifier.padding(20.dp)
         )
         Text(
             text = from,
             fontSize = 36.sp,
             fontStyle = FontStyle.Italic,
-            color = Color.LightGray,
+            color = Color.Red,
             modifier = Modifier
                 .padding(16.dp)
                 .align(alignment = Alignment.End)
@@ -69,15 +69,23 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingImage(message: String, from: String, modifier: Modifier = Modifier) {
     val image = painterResource(R.drawable.androidparty)
-    Image(
-        painter = image,
-        contentDescription = null
-    )
-
+    Box {
+        Image(
+            painter = image,
+            contentDescription = null
+        )
+        GreetingText(
+            message = message,
+            from = from,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp))
+    }
 }
 
 @Preview(
-    showBackground = true)
+    showBackground = true,
+    showSystemUi = true)
 @Composable
 fun BirthdayCardPreview() {
     HappyBirthdayTheme {
