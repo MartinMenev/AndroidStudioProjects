@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ComposeCompilerApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -31,11 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                     Article(
-                        stringResource(R.string.article_title),
-                        stringResource(R.string.first_paragraph),
-                        stringResource(R.string.second_paragraph),
-                     )
+                    ComposeArticleApp()
                 }
             }
         }
@@ -43,7 +40,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Article (
+fun ComposeArticleApp() {
+    Article(
+        stringResource(R.string.article_title),
+        stringResource(R.string.first_paragraph),
+        stringResource(R.string.second_paragraph),
+    )
+}
+
+@Composable
+private fun Article (
     title: String,
     paragraph1: String,
     paragraph2: String,
@@ -82,10 +88,6 @@ fun Image() {
 @Composable
 fun GreetingPreview() {
     ComposeArticleTheme {
-        Article(
-            stringResource(R.string.article_title),
-            stringResource(R.string.first_paragraph),
-            stringResource(R.string.second_paragraph),
-        )
+        ComposeArticleApp()
     }
 }
