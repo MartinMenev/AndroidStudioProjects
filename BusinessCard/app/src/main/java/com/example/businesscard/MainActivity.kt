@@ -1,15 +1,13 @@
 package com.example.businesscard
 
-import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -69,7 +68,7 @@ fun PersonalSection(
             fontSize = 36.sp,
             lineHeight = 116.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black,
+            color = Color(0xFF020F5A),
             modifier = Modifier.padding(8.dp)
         )
         Text(
@@ -82,32 +81,52 @@ fun PersonalSection(
 
 @Composable
 fun ContactSection() {
-    Column() {
-        Row(modifier = Modifier.fillMaxWidth()) {
+    Column(
+        Modifier.padding(20.dp)
+    ) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.smartphone_black_24dp),
-                contentDescription = "smartphone"
+                contentDescription = "smartphone",
+                modifier = Modifier.padding(8.dp)
             )
             Text(
-                text = stringResource(R.string.phone_number)
+                text = stringResource(R.string.phone_number),
+                fontSize = 16.sp,
             )
         }
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.share_black_24dp),
-                contentDescription = "share"
+                contentDescription = "share",
+                modifier = Modifier.padding(8.dp)
             )
             Text(
-                text = stringResource(R.string.social_share)
+                text = stringResource(R.string.social_share),
+                fontSize = 16.sp,
             )
         }
-        Row(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Icon(
                 painter = painterResource(id = R.drawable.mail_outline_black_24dp),
-                contentDescription = "email"
+                contentDescription = "email",
+                modifier = Modifier.padding(8.dp)
             )
             Text(
-                text = stringResource(R.string.email_contact)
+                text = stringResource(R.string.email_contact),
+                fontSize = 16.sp,
             )
         }
     }
@@ -117,20 +136,29 @@ fun ContactSection() {
 fun DisplayCard() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(25.dp)
+            .fillMaxSize()
+            .padding(27.dp)
+            .background(Color(0xFFE3DCEB))
+            .shadow(elevation = 5.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        PersonalSection(
-            stringResource(R.string.full_name),
-            stringResource(R.string.company_position)
-        )
-        ContactSection()
+        Row(Modifier.weight(3f),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            PersonalSection(
+                stringResource(R.string.full_name),
+                stringResource(R.string.company_position)
+            )
+        }
+        Row(
+            Modifier.weight(2f),
+            verticalAlignment = Alignment.Bottom
+        ) {
+            ContactSection()
+        }
+
     }
 }
-
-
-
 
 @Preview(
     showBackground = true,
