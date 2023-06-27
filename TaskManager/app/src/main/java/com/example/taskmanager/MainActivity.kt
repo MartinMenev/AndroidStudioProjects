@@ -71,7 +71,7 @@ fun ImageGreeting(message: String, greeting: String, modifier: Modifier = Modifi
             lineHeight = 116.sp,
             fontWeight = FontWeight.Bold,
             color = Color.Black,
-            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp )
+            modifier = Modifier.padding(top = 24.dp, bottom = 8.dp )tit
         )
         Text(
             text = greeting,
