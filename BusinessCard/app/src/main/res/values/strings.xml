@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Business Card</string>
+    <string name="full_name">Martin Menev</string>
+    <string name="company_position">Country Logistics Specialist</string>
+    <string name="phone_number">+359 0898926161</string>
+    <string name="social_share">\@martin-menev</string>
+    <string name="email_contact">martin.menew@gmail.com</string>
+</resources>
