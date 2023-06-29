@@ -1,5 +1,6 @@
 fun main(args: Array<String>) {
-
+    val smartDevice: SmartDevice = SmartTvDevice("Android TV Home","Entertainment")
+    smartDevice.turnOn()
 }
 
 class SmartTvDevice(deviceName: String, deviceCategory: String) :
@@ -24,6 +25,19 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
     fun nextChannel() {
         channelNumber++
         println("Channel number increased to $channelNumber.")
+    }
+
+    override fun turnOn() {
+        deviceStatus = "on"
+        println(
+            "$name is turned on. Speaker volume is set to $speakerVolume and channel number is " +
+                    "set to $channelNumber."
+        )
+    }
+
+    override fun turnOff() {
+        deviceStatus = "off"
+        println("$name turned off")
     }
 
 }
