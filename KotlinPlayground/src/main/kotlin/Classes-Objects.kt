@@ -1,10 +1,17 @@
 fun main(args: Array<String>) {
-    val smartDevice: SmartDevice = SmartTvDevice("Android TV Home","Entertainment")
+    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home","Entertainment")
+    smartDevice.turnOn()
+    smartDevice.turnOff()
+
+    smartDevice = SmartLightDevice("My smart light", "Utility")
     smartDevice.turnOn()
 }
 
 class SmartTvDevice(deviceName: String, deviceCategory: String) :
     SmartDevice(name = deviceName, category = deviceCategory) {
+
+    override val deviceType = "Smart TV"
+
     var speakerVolume = 2
         set(value) {
             if (value in 0..100) {
@@ -28,7 +35,7 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
     }
 
     override fun turnOn() {
-        deviceStatus = "on"
+        super.turnOn()
         println(
             "$name is turned on. Speaker volume is set to $speakerVolume and channel number is " +
                     "set to $channelNumber."
@@ -36,7 +43,7 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
     }
 
     override fun turnOff() {
-        deviceStatus = "off"
+        super.turnOff()
         println("$name turned off")
     }
 
@@ -44,12 +51,20 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
 open class SmartDevice(val name: String, val category: String) {
     var deviceStatus: String? = "online"
-    open fun turnOn() {}
-    open fun turnOff() {}
+    open val deviceType = "unknown"
+
+    open fun turnOn() {
+        deviceStatus = "on"
+    }
+    open fun turnOff() {
+        deviceStatus = "off"
+    }
 }
 
 class SmartLightDevice(deviceName: String, deviceCategory: String) :
     SmartDevice(name = deviceName, category = deviceCategory) {
+
+    override val deviceType = "Smart Light"
 
     var brightnessLevel = 0
         set(value) {
@@ -59,13 +74,13 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
         }
 
     override fun turnOn() {
-        deviceStatus = "On"
+        super.turnOn()
         brightnessLevel = 2
         println("$name turned on. The brightness level is $brightnessLevel.")
     }
 
     override fun turnOff() {
-        deviceStatus = "off"
+        super.turnOff()
         brightnessLevel = 0
         println("Smart Light turned off")
     }
