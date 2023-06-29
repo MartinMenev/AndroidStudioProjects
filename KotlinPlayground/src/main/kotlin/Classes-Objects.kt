@@ -1,5 +1,5 @@
 fun main(args: Array<String>) {
-    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home","Entertainment")
+    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home", "Entertainment")
     smartDevice.turnOn()
     smartDevice.turnOff()
 
@@ -7,23 +7,38 @@ fun main(args: Array<String>) {
     smartDevice.turnOn()
 }
 
-class SmartTvDevice(deviceName: String, deviceCategory: String) :
+open class SmartDevice(val name: String, val category: String) {
+    private var deviceStatus: String? = "online"
+
+    open val deviceType = "unknown"
+
+    open fun turnOn() {
+        deviceStatus = "on"
+    }
+
+    open fun turnOff() {
+        deviceStatus = "off"
+    }
+}
+
+open class SmartTvDevice(deviceName: String, deviceCategory: String) :
     SmartDevice(name = deviceName, category = deviceCategory) {
 
     override val deviceType = "Smart TV"
 
-    var speakerVolume = 2
+    private var speakerVolume = 2
         set(value) {
             if (value in 0..100) {
                 field = value
             }
         }
-    var channelNumber = 1
+    private var channelNumber = 1
         set(value) {
             if (value in 0..200) {
                 field = value
             }
         }
+
     fun increaseSpeakerVolume() {
         speakerVolume++
         println("Speaker volume increased to $speakerVolume.")
@@ -49,24 +64,13 @@ class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
 }
 
-open class SmartDevice(val name: String, val category: String) {
-    var deviceStatus: String? = "online"
-    open val deviceType = "unknown"
-
-    open fun turnOn() {
-        deviceStatus = "on"
-    }
-    open fun turnOff() {
-        deviceStatus = "off"
-    }
-}
 
 class SmartLightDevice(deviceName: String, deviceCategory: String) :
     SmartDevice(name = deviceName, category = deviceCategory) {
 
     override val deviceType = "Smart Light"
 
-    var brightnessLevel = 0
+    private var brightnessLevel = 0
         set(value) {
             if (value in 0..100) {
                 field = value
@@ -92,17 +96,21 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 }
 
 
-class SmartHome(
-    val smartTvDevice: SmartTvDevice,
-    val smartLightDevice: SmartLightDevice
+open class SmartHome protected constructor(
+    private val smartTvDevice: SmartTvDevice,
+    private val smartLightDevice: SmartLightDevice
 ) {
+    private var deviceTurnOnCount = 0
+        private set
 
     fun turnOnTv() {
         smartTvDevice.turnOn()
+        deviceTurnOnCount++
     }
 
     fun turnOffTv() {
         smartTvDevice.turnOff()
+        deviceTurnOnCount--
     }
 
     fun increaseTvVolume() {
@@ -115,10 +123,12 @@ class SmartHome(
 
     fun turnOnLight() {
         smartLightDevice.turnOn()
+        deviceTurnOnCount++
     }
 
-    fun turnOffLight() {
+    private fun turnOffLight() {
         smartLightDevice.turnOff()
+        deviceTurnOnCount--
     }
 
     fun turnOffAllDevices() {
