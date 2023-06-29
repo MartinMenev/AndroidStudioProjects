@@ -1,3 +1,3 @@
-<strong>Practice: Kotlin Fundamentals</strong>
+# Practice: Kotlin Fundamentals
 
 - Codelab trainings led by Google Android Team
