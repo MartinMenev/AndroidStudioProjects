@@ -76,11 +76,11 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 }
 
 
-open class SmartHome protected constructor(
+open class SmartHome(
     private val smartTvDevice: SmartTvDevice,
     private val smartLightDevice: SmartLightDevice
 ) {
-    private var deviceTurnOnCount = 0
+    var deviceTurnOnCount = 0
         private set
 
     fun turnOnTv() {
@@ -118,12 +118,25 @@ open class SmartHome protected constructor(
 }
 
 fun main(args: Array<String>) {
-    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home", "Entertainment")
-    smartDevice.turnOn()
-    smartDevice.turnOff()
 
-    smartDevice = SmartLightDevice("My smart light", "Utility")
-    smartDevice.turnOn()
+    val smartHome = SmartHome(
+        SmartTvDevice(deviceName = "Android TV", deviceCategory = "Entertainment"),
+        SmartLightDevice(deviceName = "Google light", deviceCategory = "Utility")
+    )
+
+    smartHome.turnOnTv()
+    smartHome.turnOnLight()
+    println("Total number of devices currently turned on: ${smartHome.deviceTurnOnCount}")
+    println()
+
+    smartHome.increaseTvVolume()
+    smartHome.increaseTvVolume()
+    smartHome.increaseTvVolume()
+
+    smartHome.changeTvChannelToNext()
+    println()
+    smartHome.turnOffAllDevices()
+    println("Total number of devices currently turned on: ${smartHome.deviceTurnOnCount}.")
 }
 
 class RangeRegulator(
