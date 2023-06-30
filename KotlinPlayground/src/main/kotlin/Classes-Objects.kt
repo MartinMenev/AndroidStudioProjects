@@ -1,14 +1,9 @@
-fun main(args: Array<String>) {
-    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home", "Entertainment")
-    smartDevice.turnOn()
-    smartDevice.turnOff()
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
-    smartDevice = SmartLightDevice("My smart light", "Utility")
-    smartDevice.turnOn()
-}
 
 open class SmartDevice(val name: String, val category: String) {
-    private var deviceStatus: String? = "online"
+    private var deviceStatus = "online"
 
     open val deviceType = "unknown"
 
@@ -26,18 +21,8 @@ open class SmartTvDevice(deviceName: String, deviceCategory: String) :
 
     override val deviceType = "Smart TV"
 
-    private var speakerVolume = 2
-        set(value) {
-            if (value in 0..100) {
-                field = value
-            }
-        }
-    private var channelNumber = 1
-        set(value) {
-            if (value in 0..200) {
-                field = value
-            }
-        }
+    private var speakerVolume by RangeRegulator(initialValue = 0, minValue = 0, maxValue = 100)
+    private var channelNumber by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 200)
 
     fun increaseSpeakerVolume() {
         speakerVolume++
@@ -70,12 +55,7 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
 
     override val deviceType = "Smart Light"
 
-    private var brightnessLevel = 0
-        set(value) {
-            if (value in 0..100) {
-                field = value
-            }
-        }
+    private var brightnessLevel by RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
 
     override fun turnOn() {
         super.turnOn()
@@ -108,7 +88,7 @@ open class SmartHome protected constructor(
         deviceTurnOnCount++
     }
 
-    fun turnOffTv() {
+    private fun turnOffTv() {
         smartTvDevice.turnOff()
         deviceTurnOnCount--
     }
@@ -137,3 +117,31 @@ open class SmartHome protected constructor(
     }
 }
 
+fun main(args: Array<String>) {
+    var smartDevice: SmartDevice = SmartTvDevice("Android TV Home", "Entertainment")
+    smartDevice.turnOn()
+    smartDevice.turnOff()
+
+    smartDevice = SmartLightDevice("My smart light", "Utility")
+    smartDevice.turnOn()
+}
+
+class RangeRegulator(
+    initialValue: Int,
+    private val minValue: Int,
+    private val maxValue: Int
+) : ReadWriteProperty<Any?, Int> {
+
+    private var fieldData = initialValue
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Int {
+        return fieldData
+    }
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
+        if (value in minValue..maxValue) {
+            fieldData = value
+        }
+    }
+
+}
