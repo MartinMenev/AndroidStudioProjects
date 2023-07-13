@@ -76,18 +76,28 @@ fun ScreenWithButtonImageAndText(modifier: Modifier = Modifier) {
         else -> R.drawable.lemon_restart
     }
 
+    val textResource = when (result) {
+        1 -> R.string.lemon_tree
+        2 -> R.string.lemon
+        3 -> R.string.glass_of_lemonade
+        else -> R.string.empty_glass
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Button(onClick = {result = (1..6).random()}) {
+        Button(onClick = {
+            if (result < 4) result ++
+            else result = 1
+        }) {
             Image(
                 painter = painterResource(imageResource),
                 contentDescription = result.toString()
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
-        Text(stringResource(R.string.lemon_tree), fontSize = 18.sp)
+        Text(stringResource(textResource), fontSize = 18.sp)
     }
 }
